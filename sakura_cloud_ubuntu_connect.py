@@ -3,20 +3,25 @@ import os
 import dotenv
 import pexpect
 
-def sakura_cloud_ubuntu_connect(private_key_path, config_host):
+def sakura_cloud_ubuntu_connect():
     """
     SSHエージェントを起動し、.envからパスフレーズを取得して秘密鍵を登録、SSH接続を試みる。
-
-    Args:
-        private_key_path (str): 秘密鍵のパス。
-        config_host (str): ~/.ssh/config で定義されたホスト名。
     """
 
     try:
         # .env ファイルの読み込み
         dotenv.load_dotenv()
+        # 秘密鍵のパス
+        private_key_path = os.path.expanduser(os.getenv("PRIVATE_KEY_PATH"))
+        # ~/.ssh/config で定義されたホスト名
+        config_host = os.getenv("CONFIG_HOST")
+        # 秘密鍵のパスフレーズ
         passphrase = os.getenv("SAKURA_CLOUD_UBUNTU_PASS")
 
+        if private_key_path is None:
+            raise ValueError(".envファイルにPRIVATE_KEY_PATHが設定されていません。")
+        if config_host is None:
+            raise ValueError(".envファイルにCONFIG_HOSTが設定されていません。")
         if passphrase is None:
             raise ValueError(".envファイルにSAKURA_CLOUD_UBUNTU_PASSが設定されていません。")
 
@@ -46,7 +51,4 @@ def sakura_cloud_ubuntu_connect(private_key_path, config_host):
         print(f"エラーが発生しました: {e}")
 
 if __name__ == "__main__":
-    private_key_path = os.path.expanduser('~/.ssh/odoo-sk-mrt.pem')  # 秘密鍵のパス
-    config_host = "sakura-cloud-ubuntu" # ~/.ssh/config で定義されたホスト名
-
-    sakura_cloud_ubuntu_connect(private_key_path, config_host)
+    sakura_cloud_ubuntu_connect()
