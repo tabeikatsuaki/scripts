@@ -3,7 +3,7 @@ import os
 import dotenv
 import pexpect
 
-def sakura_cloud_ubuntu_connect():
+def ssh_connect():
     """
     SSHエージェントを起動し、.envからパスフレーズを取得して秘密鍵を登録、SSH接続を試みる。
     """
@@ -51,4 +51,4 @@ def sakura_cloud_ubuntu_connect():
         print(f"エラーが発生しました: {e}")
 
 if __name__ == "__main__":
-    sakura_cloud_ubuntu_connect()
+    ssh_connect()

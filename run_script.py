@@ -34,6 +34,6 @@ def activate_venv_and_run_script(script_path):
         print(f"予期しないエラーが発生しました: {e}")
 
 if __name__ == "__main__":
-    script_path = "sakura_cloud_ubuntu_connect.py"  # 実行するスクリプトの名前
+    script_path = "ssh_connect.py"  # 実行するスクリプトの名前
 
     activate_venv_and_run_script(script_path)
